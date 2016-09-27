@@ -28,4 +28,4 @@ Accepted
 $ cmdjudge --source-code A.java--input-file inp.txt --correct-output-file correctout.txt --time-limit 0.34
 Time Limit Execced
 ```
-[![demo](https://i.imgur.com/inUpV2O.gif)
+![demo](https://i.imgur.com/inUpV2O.gif)
