@@ -1,0 +1,155 @@
+#!/usr/bin/env bash
+
+#default time-limit is 1 sec
+time_limit=1
+source_code=
+input_file=
+correct_output_file=
+
+function show_usage() 
+{
+    echo '
+Usage: [-h] [-t TIME-LIMIT ] [-s SOURCE-CODE ] [-i INPUT-FILE] [-c CORRECT-OUTPUT-FILE ]
+
+Optional Arguments:
+    
+-h , --help : show this help message and exit
+-t TIME-LIMIT , --time-limit TIME-LIMIT : max time-limit required for source code to execute [Default time-limit is 1-sec]
+-s SOURCE-CODE, --source-code SOURCE-CODE : valid path for c/cpp/py/java source code 
+-i INPUT-FILE, --input-file INPUT-FILE : input testcase file required
+-c CORRECT-OUTPUT-FILE, --correct-output-file CORRECT-OUTPUT-FILE : correct output file, which will be judged with user output file
+    '
+}
+
+function argdebug()
+{
+    echo "time-limit : $time_limit"
+    echo "source-code : $source_code"
+    echo "input-file : $input_file"
+    echo "correct-output-file: $correct_output_file"
+}
+
+function check_all_args()
+{
+    if [ -z "$source_code" ] || [ -z "$input_file" ] || [ -z "$correct_output_file" ];then
+        echo "Must specify arguments in -s , -i , -c "
+        echo "see --help  for usage"
+        exit 1
+    fi
+}
+
+function compile()
+{
+    case $source_code in
+        *.c) 
+            gcc $source_code -o ./${source_code%.*}
+            ;;
+        *.cpp)
+            g++ $source_code -o ./${source_code%.*}
+            ;;
+        *.java)
+            javac $source_code 
+            ;;
+    esac
+     
+    if [ "$?" -ne 0 ];then
+        echo "Compilation Error"
+        exit 1
+    fi   
+}
+
+function execute()
+{
+    # for c/cpp/java compile status
+    
+    if [[ "$source_code" =~ ^.+\.py$ ]];then
+        timeout $time_limit python $source_code < $input_file > ./userout.txt
+    elif [[ "$source_code" =~ ^.+\.java$ ]];then
+        javaobj="${source_code%.*}"
+        timeout $time_limit java $javaobj < $input_file > ./userout.txt
+    else
+        timeout $time_limit ./${source_code%.*} < $input_file > ./userout.txt
+    fi
+
+    if [ "$?" -ne 0 ];then
+        echo "Time Limit Exceeded"
+        exit 1
+    fi
+    
+    
+}
+function judge()
+{
+    #exit code 0 means true in shell
+    #diff return 0 if no difference b/w two files
+    if diff ./userout.txt $correct_output_file &> /dev/null ;then 
+        echo "Accepted"
+    else
+        echo "Wrong Answer"
+    fi
+}
+
+function main()
+{
+    while [ $# -gt 0 ]; do
+        case $1 in 
+            -h|--help)
+                show_usage
+                exit
+                ;;
+            -t|--time-limit)
+                if [[ "$2" =~ ^[+]?[0-9]+\.?[0-9]*$ ]]; then
+                    time_limit=$2
+                    shift
+                else
+                    printf 'ERROR: --time-limit requires an +number[eg 1,2,3,1.4,0.5,1.123 etc] argument\n' >&2
+                    exit 1
+                fi
+                ;;
+            -s|--source-code) #source code file should be exist with valid extension
+                if [[ $2 =~ ^.+\.(c|cpp|py|java)$ ]] && [ -f "$2" ]; then
+                    source_code=$2
+                    shift
+                else
+                    printf 'ERROR: --source-code requires a valid c/cpp/py/java file\n' >&2 
+                    exit 1
+                fi
+                ;;
+            -i|--input-file)
+                if [ -f "$2" ]; then
+                    input_file=$2
+                    shift
+                else
+                    printf 'ERROR: --input-file requires a valid text-file\n' >&2
+                    exit 1
+                fi
+                ;;
+            -c|--correct-output-file)
+                if [ -f "$2" ]; then
+                    correct_output_file=$2
+                    shift
+                else
+                    printf 'ERROR: --correct-output-file requires a valid text-file\n' >&2
+                    exit 1
+                fi
+                ;;
+
+            -?*)
+                printf 'WARNING: Unknown option (ignored): %s\n' "$1" >&2
+                shift
+                ;;
+
+            *)  
+                shift
+        esac
+    done
+    #check required args 
+    check_all_args
+    #compilation from source to obj code
+    compile
+    #execution from object code
+    execute
+    #checking user generation output with correct-output-file
+    judge
+}
+main $@
