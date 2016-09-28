@@ -149,7 +149,7 @@ function main()
     compile
     #execution from object code
     execute
-    #checking user generation output with correct-output-file
+    #checking user generated output-file with correct-output-file
     judge
 }
 main $@

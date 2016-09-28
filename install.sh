@@ -7,4 +7,4 @@ fi
 echo 'alias cmdjudge="$HOME/.cmdjudge/cmdjudge.sh"' >> ~/.bashrc
 echo 'alias cmdjudge="$HOME/.cmdjudge/cmdjudge.sh"' >> ~/.zshrc
 
-echo "Installation successfull"
+echo "Installation successful"
