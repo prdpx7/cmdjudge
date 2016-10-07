@@ -5,7 +5,7 @@ time_limit=1
 source_code=
 input_file=
 correct_output_file=
-
+status_code=
 function show_usage() 
 {
     echo '
@@ -32,12 +32,27 @@ function argdebug()
 function check_all_args()
 {
     if [ -z "$source_code" ] || [ -z "$input_file" ] || [ -z "$correct_output_file" ];then
-        echo "Must specify arguments in -s , -i , -c "
-        echo "see --help  for usage"
+        echo "Must specify arguments in -s(source code) , -i(input_txt_file) , -c(correct_output_txt_file) "
+        echo "for more info try cmdjudge --help"
         exit 1
     fi
 }
 
+function delete_tmp_files()
+{
+    obj=./${source_code%.*}
+    if [ -f $obj ];then 
+        rm $obj
+    fi
+    
+    if [ -f $obj.class ];then
+        rm $obj.class
+    fi
+
+    if [ -f ./userout.txt ];then
+        rm ./userout.txt
+    fi
+}
 function compile()
 {
     case $source_code in
@@ -51,8 +66,8 @@ function compile()
             javac $source_code 
             ;;
     esac
-     
-    if [ "$?" -ne 0 ];then
+    status_code=$?
+    if [ "$status_code" -ne 0 ];then
         echo "Compilation Error"
         exit 1
     fi   
@@ -70,13 +85,16 @@ function execute()
     else
         timeout $time_limit ./${source_code%.*} < $input_file > ./userout.txt
     fi
-
-    if [ "$?" -ne 0 ];then
-        echo "Time Limit Exceeded"
+    status_code=$? 
+    if [ "$status_code" -eq 1 ];then
+        echo "Compilation Error"
+        delete_tmp_files
         exit 1
+    elif [ "$status_code" -ne 0 ];then
+        echo "Time Limit Exceeded"
+        delete_tmp_files
+        exit $status_code
     fi
-    
-    
 }
 function judge()
 {
@@ -87,6 +105,7 @@ function judge()
     else
         echo "Wrong Answer"
     fi
+    delete_tmp_files
 }
 
 function main()
