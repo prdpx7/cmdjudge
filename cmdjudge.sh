@@ -100,7 +100,8 @@ function judge()
 {
     #exit code 0 means true in shell
     #diff return 0 if no difference b/w two files
-    if diff ./userout.txt $correct_output_file &> /dev/null ;then 
+    # ignore newline at EOF
+    if diff  <(sed -e '$a\' $correct_output_file ) <(sed -e '$a\' ./userout.txt) &> /dev/null; then
         echo "Accepted"
     else
         echo "Wrong Answer"
