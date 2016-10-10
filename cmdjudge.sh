@@ -100,7 +100,9 @@ function judge()
 {
     #exit code 0 means true in shell
     #diff return 0 if no difference b/w two files
+    # update !!!
     # ignore newline at EOF
+    # https://superuser.com/questions/388276/prevent-diff-from-checking-for-newline-at-end-of-file
     if diff  <(sed -e '$a\' $correct_output_file ) <(sed -e '$a\' ./userout.txt) &> /dev/null; then
         echo "Accepted"
     else
