@@ -174,4 +174,4 @@ function main()
     #checking user generated output-file with correct-output-file
     judge
 }
-main $@
+main "$@"

@@ -2,11 +2,19 @@
 A simple command line code judge
 
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/zuck007/cmdjudge/master/LICENSE)
-## Installation
+[![PyPI version](https://badge.fury.io/py/cmdjudge.svg)](https://badge.fury.io/py/cmdjudge)
+[![Code Health](https://landscape.io/github/zuck007/cmdjudge/master/landscape.svg?style=flat)](https://landscape.io/github/zuck007/cmdjudge/master)
 
+## Installation
+* from PyPI
+```
+pip install cmdjudge
+```
+* with curl
 ```
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/zuck007/cmdjudge/master/install.sh)"
 ```
+
 ## Usage
 ```
 $ cmdjudge --help
@@ -23,7 +31,7 @@ Optional Arguments:
 
 ## Demo
 ```
-$ cmdjudge -s A.cpp -i inp.txt -c correctout.txt 
+$ cmdjudge -s A.cpp -i inp.txt -c correctout.txt
 Accepted
 $ cmdjudge --source-code A.java --input-file inp.txt --correct-output-file correctout.txt --time-limit 0.34
 Time Limit Execced

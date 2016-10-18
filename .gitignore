@@ -1,3 +1,6 @@
 *.gif
 *.class
 *userout.txt
+*.egg-info
+*.pyc
+dist/
