@@ -3,12 +3,12 @@
 import setuptools
 
 setuptools.setup(
-        version='0.1',
+        version='0.2',
         name='cmdjudge',
         description='bash script for offline code judge',
         author='Pradeep Khileri',
         author_email='pradeepchoudhary009@gmail.com',
         license='MIT',
-        url='https://github.com/zuck007/cmdjudge',
+        url='https://github.com/prdpx7/cmdjudge',
         scripts=['cmdjudge'],
         )

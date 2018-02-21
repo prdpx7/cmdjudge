@@ -1,9 +1,9 @@
 # cmdjudge
 A simple command line code judge
 
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/zuck007/cmdjudge/master/LICENSE)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/prdpx7/cmdjudge/master/LICENSE)
 [![PyPI version](https://badge.fury.io/py/cmdjudge.svg)](https://badge.fury.io/py/cmdjudge)
-[![Code Health](https://landscape.io/github/zuck007/cmdjudge/master/landscape.svg?style=flat)](https://landscape.io/github/zuck007/cmdjudge/master)
+[![Code Health](https://landscape.io/github/prdpx7/cmdjudge/master/landscape.svg?style=flat)](https://landscape.io/github/prdpx7/cmdjudge/master)
 
 ## Installation
 * from PyPI
@@ -12,7 +12,7 @@ pip install cmdjudge
 ```
 * with curl
 ```
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/zuck007/cmdjudge/master/install.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/prdpx7/cmdjudge/master/install.sh)"
 ```
 
 ## Usage
