@@ -3,7 +3,7 @@
 import setuptools
 
 setuptools.setup(
-        version='0.2',
+        version='1.0',
         name='cmdjudge',
         description='bash script for offline code judge',
         author='Pradeep Khileri',

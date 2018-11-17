@@ -57,13 +57,13 @@ function compile()
 {
     case $source_code in
         *.c) 
-            gcc $source_code -o ./${source_code%.*}
+            gcc $source_code -o ./${source_code%.*} 2> /dev/null
             ;;
         *.cpp)
-            g++ $source_code -o ./${source_code%.*}
+            g++ $source_code -o ./${source_code%.*} 2> /dev/null
             ;;
         *.java)
-            javac $source_code 
+            javac $source_code 2> /dev/null
             ;;
     esac
     status_code=$?
@@ -78,10 +78,12 @@ function execute()
     # for c/cpp/java compile status
     
     if [[ "$source_code" =~ ^.+\.py$ ]];then
-        timeout $time_limit python $source_code < $input_file > ./userout.txt
+        timeout $time_limit python $source_code < $input_file > ./userout.txt  2> /dev/null
     elif [[ "$source_code" =~ ^.+\.java$ ]];then
-        javaobj="${source_code%.*}"
-        timeout $time_limit java $javaobj < $input_file > ./userout.txt
+        dir_name=`dirname $source_code`
+        base_name=`basename $source_code`
+        javaobj="${base_name%.*}"
+        timeout $time_limit java -cp "$dir_name"  "$javaobj" < "$input_file" > ./userout.txt
     else
         timeout $time_limit ./${source_code%.*} < $input_file > ./userout.txt
     fi
