@@ -1,5 +1,5 @@
 # cmdjudge
-A simple command line code judge
+A Command Line Code Judge to evaluate programs for a given input & output text files with time constraint
 
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/prdpx7/cmdjudge/master/LICENSE)
 [![PyPI version](https://badge.fury.io/py/cmdjudge.svg)](https://badge.fury.io/py/cmdjudge)
@@ -28,6 +28,7 @@ Optional Arguments:
 -i INPUT-FILE, --input-file INPUT-FILE : input testcase file required
 -c CORRECT-OUTPUT-FILE, --correct-output-file CORRECT-OUTPUT-FILE : correct output file, which will be judged with user output file
 ```
+* Here's a sample [script](https://gist.github.com/prdpx7/48e4b5c795da34e29351e58029076223) to generate results by using `cmdjudge`.
 
 ## Demo
 ```
